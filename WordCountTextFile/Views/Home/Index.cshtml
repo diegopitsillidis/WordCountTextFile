@@ -1,10 +1,26 @@
-﻿@model WordCountTextFile.Models.TextModel
+﻿@model IEnumerable<WordCountTextFile.Models.TextModel>
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Program to count the number of instances of each word in a text file. Top 10 words are displayed</p>
 </div>
-<p>@Model.Word</p>
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Word)</th>
+            <th>@Html.DisplayNameFor(model => model.Count)</th>
+        </tr>
+    </thead>
+    <tbody>
+   @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Word</td>
+            <td>@item.Count</td>
+        </tr>
+    }
+    </tbody>
+</table>

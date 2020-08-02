@@ -19,8 +19,6 @@ namespace WordCountTextFile.Controllers
 
         public IActionResult Index()
         {
-            
-
             string line;
             string text = "";
             //assuming no words are split between lines and lines have complete words
@@ -31,27 +29,11 @@ namespace WordCountTextFile.Controllers
                 line = line.ToLower();
                 text +=line;
             }
-
             var wordList = text.Split(" ");
-            var output = wordList.GroupBy(x => x).Select(x => new TextModel { Word = x.Key, Count = x.Count() }).OrderByDescending(x => x.Count);
-            string Result = "";
-            var i = 0;
-            foreach (var item in output)
-            {
-                if (i < 10)
-                {
-                    Result += item.Word + " : " + item.Count + Environment.NewLine;
-                    i++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-
-            //return View(Result);
-            return Content(Result);
+            //list of top 10 words ordered by descending order
+            var output = wordList.GroupBy(x => x).Select(x => new TextModel { Word = x.Key, Count = x.Count() }).OrderByDescending(x => x.Count).ToList().Take(10);
+            
+            return View(output);
         }
 
         public IActionResult Privacy()
